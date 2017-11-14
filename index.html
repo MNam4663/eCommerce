@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title> </title>
+
+    <style>
+      img {
+        width: 180px;
+      }
+      input{
+        width: 50px;
+      }
+      div{
+        width:300px;
+      }
+      body{
+        background-image: url(https://vignette.wikia.nocookie.net/gundam/images/f/f2/Gunpla_Logo.svg.png/revision/latest?cb=20150409003548);
+        background-size: 1000px, 1000px;
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        background-attachment: fixed;
+        background-color: cyan;
+      }
+    </style>
+
+    <script>
+      //defining the variables
+      var pr1=10, Wpr1= 5;
+      var pr2=20, Wpr2= 7;
+      var pr3=15, Wpr3= 10;
+      var taxRate= 8.75;
+      function initPrices(){
+          document.getElementById("span1").innerHTML= "Price:$" + pr1;
+          document.getElementById("span2").innerHTML= "Price:$" + pr2;
+          document.getElementById("span3").innerHTML= "Price:$" + pr3;
+      }  
+      function ProcessOrder(){
+        //getting the quantities of items
+          var Q1=parseInt(document.getElementById("qty1").value);
+          var Q2=parseInt(document.getElementById("qty2").value);
+          var Q3=parseInt(document.getElementById("qty3").value);
+          //calculations
+          var cust_subtotal=(pr1*Q1)+(pr2*Q2)+(pr3*Q3);
+          var comp_subtotal=(Wpr1*Q1)+(Wpr2*Q2)+(Wpr3*Q3);
+          var total_items=Q1+Q2+Q3;
+          var profit= cust_subtotal -comp_subtotal;
+          var tax= (cust_subtotal*0.0875);
+          var cust_total=cust_subtotal+tax;
+          var shipping= 0;
+          //shipping costs
+          if (cust_subtotal<100){
+            shipping=25;
+          }else if(cust_subtotal>100 && cust_subtotal<200){
+            shipping=10;
+          }else shipping=0;
+
+          var op= document.getElementById("output");
+          var build="";
+
+          build+= "<div id='custInfo'>";
+          build+= "<pre>"; //preserves all spaces "as is", will keep it in same format.
+          build+= "** CUSTOMER ORDER DETAILS **<br>";
+          build+= "------------------------------------------<br>";
+          build+= "Subtotal:                   $" + cust_subtotal.toFixed(2) + "<br>";
+          build+= "Tax:                        $" + tax.toFixed(2) + "<br>";
+          build+= "Shipping and Handling:      $" + shipping + "<br>";
+          build+= "YOUR TOTAL:                $" + cust_total.toFixed(2) + "<br><hr>";
+
+          build+= "<br><hr>";
+          build+= "<div id= CmpnyInfo>";
+          build+= "<pre>";
+          build+= "** ORDER DETAILS FOR COMPANY **<br>";
+          build+= "TOTAL ITEMS SOLD:     " + total_items + "<br>";
+          build+= "Customer Subtotal:       $" + cust_subtotal.toFixed(2) +"<br>";
+          build+= "COMPANY SUBTOTAL:        $" + comp_subtotal.toFixed(2) + "<br>";
+          build+= "PROFIT/LOSS:                  $" + profit.toFixed(2) + "<br><br>";
+          build+= "<div>";
+
+          op.innerHTML= build;
+
+      }
+    </script>
+
+    </head>
+
+        <body onload= "initPrices()">
+          <hello> Michael Nam's Model Shop </hello>
+          <!-- item 1(model 1: RX-78-2 model)-->
+          <div>
+            <img src="rx-78-2.jpg"><br>
+            <p>The Original Gundam from the 1979 Anime "Mobile Suit Gundam" has been reborn as a new model kit! 1/144 scale. Includes main figure, Beam Rifle, Beam Sabers, Bazooka, Shield, and optional hand parts.</p><br>
+            <span id="span1"></span>
+            <input type="text" id="qty1" placeholder="Enter #">
+          </div>
+          <br>
+          <!-- item 2(model 2: Freedom model)-->
+          <div>
+            <img src="freedom.jpg"><br>
+            <p> A popular Gundam design from 2002's "Mobile Suit Gundam Seed" has been turned into a model kit! The Freedom Gundam takes flight! 1/144 scale. Includes main figure, Beam Rifle, Shield, Beam Sabers, and optional hand parts.<pr><br>
+            <span id="span2"></span>
+            <input type="text" id="qty2" placeholder="Enter #">
+          </div>
+          <br>
+          <!-- item 3(model 3: Barbatos model)-->
+          <div>
+            <img src="barbatos.jpg"><br>
+            <p> The lead Gundam from the 2015 anime "Mobile Suit Gundam: IRON BLOODED ORPHANS" appears in a brand-new 1/144 scale model kit! Includes main figure, Mace and Long Sword.<pr><br>
+            <span id="span3"></span>
+            <input type="text" id="qty3" placeholder="Enter #">
+          </div> 
+
+          <!-- Payment and Processing-->
+          <button onclick="ProcessOrder()"> Process Order</button>
+          <br>
+          <div id= "output"></div>
+        </body>
+
+</html>
